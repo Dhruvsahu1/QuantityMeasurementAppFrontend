@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantity Measurement App</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="glass-card auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">📏</div>
+                <h1 class="auth-title">Quantity Measurement</h1>
+                <p class="auth-subtitle">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        // Wait for API to be loaded
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check for OAuth token in URL (from OAuth redirect via backend)
+            const urlParams = new URLSearchParams(window.location.search);
+            const oauthToken = urlParams.get('oauth_token');
+            const oauthEmail = urlParams.get('email');
+            
+            console.log('Index page: oauth_token found:', !!oauthToken);
+            
+            if (oauthToken) {
+                // Store JWT token
+                API.setToken(oauthToken);
+                if (oauthEmail) {
+                    localStorage.setItem('user_email', decodeURIComponent(oauthEmail));
+                }
+                console.log('Token stored, redirecting to dashboard...');
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            
+            // Check if already authenticated
+            if (API.isAuthenticated()) {
+                window.location.href = 'dashboard.html';
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>

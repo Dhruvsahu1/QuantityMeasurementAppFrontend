@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Quantity Measurement</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+        <span style="font-weight: 600;">Measurement App</span>
+    </div>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">📏</div>
+                <span class="sidebar-logo-text">Measurement</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-page="home" onclick="showPage('home')">
+                    <svg class="nav-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Home
+                </button>
+                
+                <button class="nav-item" data-page="convert" onclick="showPage('convert')">
+                    <svg class="nav-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                    Convert
+                </button>
+                
+                <button class="nav-item" data-page="compare" onclick="showPage('compare')">
+                    <svg class="nav-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    Compare
+                </button>
+                
+                <button class="nav-item" data-page="history" onclick="showPage('history')">
+                    <svg class="nav-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    History
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="nav-item" onclick="handleLogout()">
+                    <svg class="nav-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Page -->
+            <div id="home-page" class="feature-panel active">
+                <div class="page-header">
+                    <h1 class="page-title">Welcome to Measurement App</h1>
+                    <p class="page-subtitle" id="userEmail">Loading...</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="glass-card dashboard-card" onclick="showPage('convert')">
+                        <div class="dashboard-card-icon">🔄</div>
+                        <h3 class="dashboard-card-title">Convert Measurement</h3>
+                        <p class="dashboard-card-desc">Convert between different units of measurement like length, weight, volume, and temperature.</p>
+                    </div>
+                    
+                    <div class="glass-card dashboard-card" onclick="showPage('compare')">
+                        <div class="dashboard-card-icon">⚖️</div>
+                        <h3 class="dashboard-card-title">Compare Measurement</h3>
+                        <p class="dashboard-card-desc">Compare two different measurements to see which one is greater or if they're equal.</p>
+                    </div>
+                    
+                    <div class="glass-card dashboard-card" onclick="showPage('history')">
+                        <div class="dashboard-card-icon">📊</div>
+                        <h3 class="dashboard-card-title">View History</h3>
+                        <p class="dashboard-card-desc">View your past conversions and comparisons in a detailed history table.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Convert Page -->
+            <div id="convert-page" class="feature-panel">
+                <div class="feature-header">
+                    <div class="feature-title">
+                        <button class="feature-back" onclick="showPage('home')">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Back
+                        </button>
+                        <h2>Convert Measurement</h2>
+                    </div>
+                </div>
+                
+                <div class="glass-card">
+                    <form id="convertForm">
+                        <div class="form-group">
+                            <label for="thisValue" class="form-label">Value</label>
+                            <input 
+                                type="number" 
+                                id="thisValue" 
+                                name="thisValue" 
+                                class="form-input" 
+                                placeholder="Enter value"
+                                step="any"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="thisMeasurementType" class="form-label">Measurement Type</label>
+                            <select id="thisMeasurementType" name="thisMeasurementType" class="form-select" required onchange="updateUnitOptions('this')">
+                                <option value="">Select type</option>
+                                <option value="LengthUnit">Length</option>
+                                <option value="WeightUnit">Weight</option>
+                                <option value="VolumeUnit">Volume</option>
+                                <option value="TemperatureUnit">Temperature</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="thisUnit" class="form-label">From Unit</label>
+                            <select id="thisUnit" name="thisUnit" class="form-select" required disabled>
+                                <option value="">Select measurement type first</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="thatUnit" class="form-label">To Unit</label>
+                            <select id="thatUnit" name="thatUnit" class="form-select" required disabled>
+                                <option value="">Select measurement type first</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                            Convert
+                        </button>
+                    </form>
+                    
+                    <div id="convertResult" class="result-card">
+                        <div class="result-value" id="resultValue">0</div>
+                        <div class="result-unit" id="resultUnit"></div>
+                        <div class="result-string" id="resultString"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Compare Page -->
+            <div id="compare-page" class="feature-panel">
+                <div class="feature-header">
+                    <div class="feature-title">
+                        <button class="feature-back" onclick="showPage('home')">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Back
+                        </button>
+                        <h2>Compare Measurement</h2>
+                    </div>
+                </div>
+                
+                <div class="glass-card">
+                    <form id="compareForm">
+                        <h3 style="margin-bottom: var(--spacing-lg);">First Measurement</h3>
+                        
+                        <div class="form-group">
+                            <label for="value1" class="form-label">Value</label>
+                            <input 
+                                type="number" 
+                                id="value1" 
+                                name="value1" 
+                                class="form-input" 
+                                placeholder="Enter first value"
+                                step="any"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="measurementType1" class="form-label">Measurement Type</label>
+                            <select id="measurementType1" name="measurementType1" class="form-select" required onchange="updateUnitOptions('compare1')">
+                                <option value="">Select type</option>
+                                <option value="LengthUnit">Length</option>
+                                <option value="WeightUnit">Weight</option>
+                                <option value="VolumeUnit">Volume</option>
+                                <option value="TemperatureUnit">Temperature</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="unit1" class="form-label">Unit</label>
+                            <select id="unit1" name="unit1" class="form-select" required disabled>
+                                <option value="">Select measurement type first</option>
+                            </select>
+                        </div>
+                        
+                        <h3 style="margin: var(--spacing-xl) 0 var(--spacing-lg);">Second Measurement</h3>
+                        
+                        <div class="form-group">
+                            <label for="value2" class="form-label">Value</label>
+                            <input 
+                                type="number" 
+                                id="value2" 
+                                name="value2" 
+                                class="form-input" 
+                                placeholder="Enter second value"
+                                step="any"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="measurementType2" class="form-label">Measurement Type</label>
+                            <select id="measurementType2" name="measurementType2" class="form-select" required onchange="updateUnitOptions('compare2')">
+                                <option value="">Select type</option>
+                                <option value="LengthUnit">Length</option>
+                                <option value="WeightUnit">Weight</option>
+                                <option value="VolumeUnit">Volume</option>
+                                <option value="TemperatureUnit">Temperature</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="unit2" class="form-label">Unit</label>
+                            <select id="unit2" name="unit2" class="form-select" required disabled>
+                                <option value="">Select measurement type first</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-secondary btn-lg" style="width: 100%;">
+                            Compare
+                        </button>
+                    </form>
+                    
+                    <div id="compareResult" class="glass-card comparison-result" style="display: none;">
+                        <div class="comparison-symbol" id="comparisonSymbol">=</div>
+                        <div class="comparison-details">
+                            <div class="comparison-item">
+                                <div class="comparison-label">First Value</div>
+                                <div class="comparison-value" id="compareValue1">0</div>
+                                <div class="comparison-value" id="compareUnit1" style="font-size: 1rem; color: var(--text-secondary);"></div>
+                            </div>
+                            <div class="comparison-item">
+                                <div class="comparison-label">Second Value</div>
+                                <div class="comparison-value" id="compareValue2">0</div>
+                                <div class="comparison-value" id="compareUnit2" style="font-size: 1rem; color: var(--text-secondary);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- History Page -->
+            <div id="history-page" class="feature-panel">
+                <div class="feature-header">
+                    <div class="feature-title">
+                        <button class="feature-back" onclick="showPage('home')">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Back
+                        </button>
+                        <h2>History</h2>
+                    </div>
+                </div>
+                
+                <div class="glass-card">
+                    <div id="historyContent">
+                        <div class="table-container">
+                            <table class="table" id="historyTable">
+                                <thead>
+                                    <tr>
+                                        <th>Values</th>
+                                        <th>Units</th>
+                                        <th>Result</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historyTableBody">
+                                    <!-- History data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="historyEmpty" class="history-empty hidden">
+                            <div class="history-empty-icon">📊</div>
+                            <h3>No History Yet</h3>
+                            <p>Your conversion and comparison history will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        // Unit options for each measurement type
+        const unitOptions = {
+            LengthUnit: ['FEET', 'INCHES', 'YARDS', 'CENTIMETERS', 'METERS', 'KILOMETERS', 'MILLIMETERS', 'MILES'],
+            WeightUnit: ['MILLIGRAM', 'GRAM', 'KILOGRAM', 'POUND', 'TONNE'],
+            VolumeUnit: ['LITRE', 'MILLILITRE', 'GALLON'],
+            TemperatureUnit: ['CELSIUS', 'FAHRENHEIT', 'KELVIN']
+        };
+        
+        // Unit display names
+        const unitDisplayNames = {
+            METERS: 'Meters', KILOMETERS: 'Kilometers', CENTIMETERS: 'Centimeters', MILLIMETERS: 'Millimeters',
+            MILES: 'Miles', YARDS: 'Yards', FEET: 'Feet', INCHES: 'Inches',
+            KILOGRAM: 'Kilogram', GRAM: 'Gram', MILLIGRAM: 'Milligram', POUND: 'Pound', OUNCE: 'Ounce', TONNE: 'Ton',
+            LITER: 'Liter', MILLILITRE: 'Milliliter', GALLON: 'Gallon', QUART: 'Quart', PINT: 'Pint', CUP: 'Cup',
+            CELSIUS: 'Celsius', FAHRENHEIT: 'Fahrenheit', KELVIN: 'Kelvin'
+        };
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for OAuth token in URL (from OAuth redirect via backend)
+            const urlParams = new URLSearchParams(window.location.search);
+            const oauthToken = urlParams.get('oauth_token');
+            const oauthEmail = urlParams.get('email');
+            
+            console.log('Dashboard: oauth_token found:', !!oauthToken);
+            
+            if (oauthToken) {
+                // Store JWT token
+                API.setToken(oauthToken);
+                if (oauthEmail) {
+                    localStorage.setItem('user_email', decodeURIComponent(oauthEmail));
+                }
+                console.log('Token stored, cleaning URL...');
+                // Clean URL - remove query params
+                window.history.replaceState({}, document.title, 'dashboard.html');
+            }
+            
+            // Check authentication
+            if (!Utils.requireAuth()) return;
+            
+            // Display user email
+            const userEmail = localStorage.getItem('user_email') || 'User';
+            document.getElementById('userEmail').textContent = userEmail;
+        });
+        
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+        
+        // Show specific page
+        function showPage(page) {
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.page === page) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Show corresponding page
+            document.querySelectorAll('.feature-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.getElementById(`${page}-page`).classList.add('active');
+            
+            // Load history if needed
+            if (page === 'history') {
+                loadHistory();
+            }
+            
+            // Close mobile sidebar
+            document.getElementById('sidebar').classList.remove('open');
+        }
+        
+        // Update unit options based on measurement type
+        function updateUnitOptions(prefix) {
+            let measurementType, unitSelect;
+            
+            if (prefix === 'this') {
+                measurementType = document.getElementById('thisMeasurementType').value;
+                unitSelect = document.getElementById('thisUnit');
+                // Also update the To Unit dropdown when measurement type changes
+                const thatUnitSelect = document.getElementById('thatUnit');
+                if (measurementType) {
+                    const units = unitOptions[measurementType] || [];
+                    thatUnitSelect.disabled = false;
+                    thatUnitSelect.innerHTML = units.map(unit => 
+                        `<option value="${unit}">${unitDisplayNames[unit] || unit}</option>`
+                    ).join('');
+                } else {
+                    thatUnitSelect.disabled = true;
+                    thatUnitSelect.innerHTML = '<option value="">Select measurement type first</option>';
+                }
+            } else if (prefix === 'that') {
+                measurementType = document.getElementById('thisMeasurementType').value;
+                unitSelect = document.getElementById('thatUnit');
+            } else if (prefix === 'compare1') {
+                measurementType = document.getElementById('measurementType1').value;
+                unitSelect = document.getElementById('unit1');
+            } else if (prefix === 'compare2') {
+                measurementType = document.getElementById('measurementType2').value;
+                unitSelect = document.getElementById('unit2');
+            }
+            
+            if (!measurementType) {
+                unitSelect.disabled = true;
+                unitSelect.innerHTML = '<option value="">Select measurement type first</option>';
+                return;
+            }
+            
+            unitSelect.disabled = false;
+            const units = unitOptions[measurementType] || [];
+            unitSelect.innerHTML = units.map(unit => 
+                `<option value="${unit}">${unitDisplayNames[unit] || unit}</option>`
+            ).join('');
+        }
+        
+        // Handle convert form submission
+        document.getElementById('convertForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const thisValue = parseFloat(document.getElementById('thisValue').value);
+            const thisUnit = document.getElementById('thisUnit').value;
+            const thisMeasurementType = document.getElementById('thisMeasurementType').value;
+            const thatUnit = document.getElementById('thatUnit').value;
+            
+            if (!thisValue || !thisUnit || !thisMeasurementType || !thatUnit) {
+                Utils.showError('Please fill in all fields');
+                return;
+            }
+            
+            try {
+                const result = await API.convertMeasurement(thisValue, thisUnit, thisMeasurementType, thatUnit);
+                
+                // Display result
+                document.getElementById('resultValue').textContent = result.resultValue || result.thatValue || '0';
+                document.getElementById('resultUnit').textContent = unitDisplayNames[result.thatUnit] || result.thatUnit || '';
+                document.getElementById('resultString').textContent = result.resultString || '';
+                
+                document.getElementById('convertResult').classList.add('show');
+                Utils.showSuccess('Conversion successful!');
+            } catch (error) {
+                Utils.showError(error.message || 'Conversion failed');
+                document.getElementById('convertResult').classList.remove('show');
+            }
+        });
+        
+        // Handle compare form submission
+        document.getElementById('compareForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const value1 = parseFloat(document.getElementById('value1').value);
+            const unit1 = document.getElementById('unit1').value;
+            const measurementType1 = document.getElementById('measurementType1').value;
+            const value2 = parseFloat(document.getElementById('value2').value);
+            const unit2 = document.getElementById('unit2').value;
+            const measurementType2 = document.getElementById('measurementType2').value;
+            
+            if (!value1 || !unit1 || !measurementType1 || !value2 || !unit2 || !measurementType2) {
+                Utils.showError('Please fill in all fields');
+                return;
+            }
+            
+            try {
+                const result = await API.compareMeasurements(value1, unit1, measurementType1, value2, unit2, measurementType2);
+                
+                // Display result
+                document.getElementById('compareValue1').textContent = value1;
+                document.getElementById('compareUnit1').textContent = unitDisplayNames[unit1] || unit1;
+                document.getElementById('compareValue2').textContent = value2;
+                document.getElementById('compareUnit2').textContent = unitDisplayNames[unit2] || unit2;
+                
+                const symbolEl = document.getElementById('comparisonSymbol');
+                symbolEl.className = 'comparison-symbol';
+                
+                if (result.isEqual || result.result === 'EQUAL') {
+                    symbolEl.textContent = '=';
+                    symbolEl.classList.add('equal');
+                } else if (result.result === 'GREATER' || result.isGreater) {
+                    symbolEl.textContent = '>';
+                    symbolEl.classList.add('greater');
+                } else {
+                    symbolEl.textContent = '<';
+                    symbolEl.classList.add('less');
+                }
+                
+                document.getElementById('compareResult').style.display = 'block';
+                Utils.showSuccess('Comparison successful!');
+            } catch (error) {
+                Utils.showError(error.message || 'Comparison failed');
+                document.getElementById('compareResult').style.display = 'none';
+            }
+        });
+        
+        // Load history
+        async function loadHistory() {
+            try {
+                const history = await API.getHistory();
+                const tbody = document.getElementById('historyTableBody');
+                const emptyState = document.getElementById('historyEmpty');
+                
+                if (!history || (Array.isArray(history) && history.length === 0)) {
+                    tbody.innerHTML = '';
+                    emptyState.classList.remove('hidden');
+                    document.querySelector('.table-container').style.display = 'none';
+                    return;
+                }
+                
+                document.querySelector('.table-container').style.display = 'block';
+                emptyState.classList.add('hidden');
+                
+                // Build table rows
+                const items = Array.isArray(history) ? history : (history.data || []);
+                tbody.innerHTML = items.map(item => `
+                    <tr>
+                        <td>${item.thisValue || '-'} / ${item.thatValue || '-'}</td>
+                        <td>${unitDisplayNames[item.thisUnit] || item.thisUnit || '-'} → ${unitDisplayNames[item.thatUnit] || item.thatUnit || '-'}</td>
+                        <td>${item.resultValue || item.thatValue || '-'}</td>
+                        <td>${Utils.formatTableDate(item.createdAt)}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                Utils.showError(error.message || 'Failed to load history');
+            }
+        }
+        
+        // Handle logout
+        function handleLogout() {
+            Utils.showSuccess('Logging out...');
+            setTimeout(() => {
+                API.logout();
+            }, 500);
+        }
+    </script>
+</body>
+</html>
